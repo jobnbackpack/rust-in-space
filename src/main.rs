@@ -5,15 +5,171 @@ use thiserror::Error;
 fn main() {
     _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
-    mount_to_body(fetch_example)
+    mount_to_body(|cx| view! {cx, <App/>})
 }
 
 #[component]
 fn App(cx: Scope) -> impl IntoView {
     view! {cx,
-        // <LaunchList/>
         <p>"hello"</p>
+        <LaunchList/>
     }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LaunchList {
+    count: i32,
+    previous: String,
+    results: Vec<Launch>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LaunchStatus {
+    id: i64,
+    name: String,
+    abbrev: String,
+    description: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ServiceProvider {
+    id: i32,
+    url: String,
+    name: String,
+    #[serde(rename = "type")]
+    type_field: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct RocketConfig {
+    id: i32,
+    url: String,
+    name: String,
+    family: String,
+    full_name: String,
+    variant: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Rocket {
+    id: i32,
+    configuration: RocketConfig,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Orbit {
+    id: i32,
+    name: String,
+    abbrev: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Mission {
+    id: i32,
+    name: String,
+    description: String,
+    launch_designator: String,
+    #[serde(rename = "type")]
+    type_field: String,
+    orbit: Orbit,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Location {
+    id: i32,
+    url: String,
+    name: String,
+    country_code: String,
+    map_image: String,
+    timezone_name: String,
+    total_launch_count: i64,
+    total_landing_count: i64,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Pad {
+    id: i32,
+    url: String,
+    agency_id: i64,
+    name: String,
+    info_url: String,
+    wiki_url: String,
+    map_url: String,
+    latitude: String,
+    longitude: String,
+    location: Location,
+    country_code: String,
+    map_image: String,
+    total_launch_count: i64,
+    orbital_launch_attempt_count: i64,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Program {
+    id: i32,
+    url: String,
+    name: String,
+    description: String,
+    agencies: Vec<Agency>,
+    image_url: String,
+    start_date: String,
+    end_date: String,
+    info_url: String,
+    wiki_url: String,
+    mission_patches: Vec<Patch>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Patch {
+    id: i32,
+    name: String,
+    priority: i64,
+    image_url: String,
+    agency: Agency,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Agency {
+    id: i32,
+    url: String,
+    name: String,
+    #[serde(rename = "type")]
+    type_field: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Launch {
+    id: String,
+    url: String,
+    slug: String,
+    name: String,
+    status: LaunchStatus,
+    last_updated: String,
+    net: String,
+    window_end: String,
+    window_start: String,
+    net_precision: LaunchStatus,
+    probability: i32,
+    weather_concerns: String,
+    holdreason: String,
+    failreason: String,
+    hashtag: String,
+    launch_service_provider: ServiceProvider,
+    rocket: Rocket,
+    mission: Mission,
+    pad: Pad,
+    webcast_live: bool,
+    image: String,
+    infographic: String,
+    program: Program,
+    orbital_launch_attempt_count: i64,
+    location_launch_attempt_count: i64,
+    pad_launch_attempt_count: i64,
+    agency_launch_attempt_count: i64,
+    orbital_launch_attempt_count_year: i64,
+    location_launch_attempt_count_year: i64,
+    pad_launch_attempt_count_year: i64,
+    agency_launch_attempt_count_year: i64,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
