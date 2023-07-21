@@ -5,171 +5,187 @@ use thiserror::Error;
 fn main() {
     _ = console_log::init_with_level(log::Level::Debug);
     console_error_panic_hook::set_once();
-    mount_to_body(|cx| view! {cx, <App/>})
+    mount_to_body(|cx| view! {cx, <div class="container"><App/></div>})
 }
 
 #[component]
 fn App(cx: Scope) -> impl IntoView {
     view! {cx,
-        <p>"hello"</p>
+        <h1>"Rust-In-Space"</h1>
         <LaunchList/>
     }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct LaunchList {
-    count: i32,
-    previous: String,
+    count: Option<i32>,
+    previous: Option<String>,
+    next: Option<String>,
     results: Vec<Launch>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct LaunchStatus {
-    id: i64,
-    name: String,
-    abbrev: String,
-    description: String,
+    id: Option<i64>,
+    name: Option<String>,
+    abbrev: Option<String>,
+    description: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ServiceProvider {
-    id: i32,
-    url: String,
-    name: String,
+    id: Option<i32>,
+    url: Option<String>,
+    name: Option<String>,
     #[serde(rename = "type")]
-    type_field: String,
+    type_field: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct RocketConfig {
-    id: i32,
-    url: String,
-    name: String,
-    family: String,
-    full_name: String,
-    variant: String,
+    id: Option<i32>,
+    url: Option<String>,
+    name: Option<String>,
+    family: Option<String>,
+    full_name: Option<String>,
+    variant: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Rocket {
-    id: i32,
-    configuration: RocketConfig,
+    id: Option<i32>,
+    configuration: Option<RocketConfig>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Orbit {
-    id: i32,
-    name: String,
-    abbrev: String,
+    id: Option<i32>,
+    name: Option<String>,
+    abbrev: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Mission {
-    id: i32,
-    name: String,
-    description: String,
-    launch_designator: String,
+    id: Option<i32>,
+    name: Option<String>,
+    description: Option<String>,
+    launch_designator: Option<String>,
     #[serde(rename = "type")]
-    type_field: String,
-    orbit: Orbit,
+    type_field: Option<String>,
+    orbit: Option<Orbit>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Location {
-    id: i32,
-    url: String,
-    name: String,
-    country_code: String,
-    map_image: String,
-    timezone_name: String,
-    total_launch_count: i64,
-    total_landing_count: i64,
+    id: Option<i32>,
+    url: Option<String>,
+    name: Option<String>,
+    country_code: Option<String>,
+    map_image: Option<String>,
+    timezone_name: Option<String>,
+    total_launch_count: Option<i64>,
+    total_landing_count: Option<i64>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Pad {
-    id: i32,
-    url: String,
-    agency_id: i64,
-    name: String,
-    info_url: String,
-    wiki_url: String,
-    map_url: String,
-    latitude: String,
-    longitude: String,
-    location: Location,
-    country_code: String,
-    map_image: String,
-    total_launch_count: i64,
-    orbital_launch_attempt_count: i64,
+    id: Option<i32>,
+    url: Option<String>,
+    agency_id: Option<i64>,
+    name: Option<String>,
+    info_url: Option<String>,
+    wiki_url: Option<String>,
+    map_url: Option<String>,
+    latitude: Option<String>,
+    longitude: Option<String>,
+    location: Option<Location>,
+    country_code: Option<String>,
+    map_image: Option<String>,
+    total_launch_count: Option<i64>,
+    orbital_launch_attempt_count: Option<i64>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Program {
-    id: i32,
-    url: String,
-    name: String,
-    description: String,
-    agencies: Vec<Agency>,
-    image_url: String,
-    start_date: String,
-    end_date: String,
-    info_url: String,
-    wiki_url: String,
-    mission_patches: Vec<Patch>,
+    id: Option<i32>,
+    url: Option<String>,
+    name: Option<String>,
+    description: Option<String>,
+    agencies: Option<Vec<Agency>>,
+    image_url: Option<String>,
+    start_date: Option<String>,
+    end_date: Option<String>,
+    info_url: Option<String>,
+    wiki_url: Option<String>,
+    mission_patches: Option<Vec<Patch>>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Patch {
-    id: i32,
-    name: String,
-    priority: i64,
-    image_url: String,
-    agency: Agency,
+    id: Option<i32>,
+    name: Option<String>,
+    priority: Option<i64>,
+    image_url: Option<String>,
+    agency: Option<Agency>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Agency {
-    id: i32,
-    url: String,
-    name: String,
+    id: Option<i32>,
+    url: Option<String>,
+    name: Option<String>,
     #[serde(rename = "type")]
-    type_field: String,
+    type_field: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Launch {
-    id: String,
-    url: String,
-    slug: String,
-    name: String,
-    status: LaunchStatus,
-    last_updated: String,
-    net: String,
-    window_end: String,
-    window_start: String,
-    net_precision: LaunchStatus,
-    probability: i32,
-    weather_concerns: String,
-    holdreason: String,
-    failreason: String,
-    hashtag: String,
-    launch_service_provider: ServiceProvider,
-    rocket: Rocket,
-    mission: Mission,
-    pad: Pad,
-    webcast_live: bool,
-    image: String,
-    infographic: String,
-    program: Program,
-    orbital_launch_attempt_count: i64,
-    location_launch_attempt_count: i64,
-    pad_launch_attempt_count: i64,
-    agency_launch_attempt_count: i64,
-    orbital_launch_attempt_count_year: i64,
-    location_launch_attempt_count_year: i64,
-    pad_launch_attempt_count_year: i64,
-    agency_launch_attempt_count_year: i64,
+    id: Option<String>,
+    url: Option<String>,
+    slug: Option<String>,
+    name: Option<String>,
+    status: Option<LaunchStatus>,
+    last_updated: Option<String>,
+    net: Option<String>,
+    window_end: Option<String>,
+    window_start: Option<String>,
+    net_precision: Option<LaunchStatus>,
+    probability: Option<i32>,
+    weather_concerns: Option<String>,
+    holdreason: Option<String>,
+    failreason: Option<String>,
+    hashtag: Option<String>,
+    launch_service_provider: Option<String>,
+    rocket: Option<String>,
+    mission: Option<String>,
+    pad: Option<String>,
+    image: Option<String>,
+    infographic: Option<String>,
+    program: Option<Program>,
+    orbital_launch_attempt_count: Option<i64>,
+    location_launch_attempt_count: Option<i64>,
+    pad_launch_attempt_count: Option<i64>,
+    agency_launch_attempt_count: Option<i64>,
+    orbital_launch_attempt_count_year: Option<i64>,
+    location_launch_attempt_count_year: Option<i64>,
+    pad_launch_attempt_count_year: Option<i64>,
+    agency_launch_attempt_count_year: Option<i64>,
+}
+
+async fn fetch_launches() -> Result<Vec<String>> {
+    // make the request
+    let res = reqwasm::http::Request::get("https://lldev.thespacedevs.com/2.2.0/launch?mode=list")
+        .send()
+        .await?
+        // convert it to JSON
+        .json::<LaunchList>()
+        .await?
+        .results
+        // extract the name field for each launch
+        .into_iter()
+        .map(|launch| launch.name.unwrap_or(String::from("empty")))
+        .collect::<Vec<_>>();
+    Ok(res)
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -276,5 +292,57 @@ pub fn fetch_example(cx: Scope) -> impl IntoView {
 
 #[component]
 fn LaunchList(cx: Scope) -> impl IntoView {
-    fetch_example(cx)
+    // fetch_example(cx)
+
+    // we use local_resource here because
+    // 1) our error type isn't serializable/deserializable
+    // 2) we're not doing server-side rendering in this example anyway
+    //    (during SSR, create_resource will begin loading on the server and resolve on the client)
+    let cats = create_local_resource(cx, || (), |_| async move { fetch_launches().await });
+
+    let fallback = move |cx, errors: RwSignal<Errors>| {
+        let error_list = move || {
+            errors.with(|errors| {
+                errors
+                    .iter()
+                    .map(|(_, e)| view! { cx, <li>{e.to_string()}</li> })
+                    .collect_view(cx)
+            })
+        };
+
+        view! { cx,
+            <div class="error">
+                <h2>"Error"</h2>
+                <ul>{error_list}</ul>
+            </div>
+        }
+    };
+
+    // the renderer can handle Option<_> and Result<_> states
+    // by displaying nothing for None if the resource is still loading
+    // and by using the ErrorBoundary fallback to catch Err(_)
+    // so we'll just implement our happy path and let the framework handle the rest
+    let cats_view = move || {
+        cats.read(cx).map(|data| {
+            data.map(|data| {
+                data.iter()
+                    .map(|s| view! { cx, <p>{s}</p> })
+                    .collect_view(cx)
+            })
+        })
+    };
+
+    view! { cx,
+        <div>
+            <ErrorBoundary fallback>
+                <Transition fallback=move || {
+                    view! { cx, <div>"Loading (Suspense Fallback)..."</div> }
+                }>
+                <div>
+                    {cats_view}
+                </div>
+                </Transition>
+            </ErrorBoundary>
+        </div>
+    }
 }
