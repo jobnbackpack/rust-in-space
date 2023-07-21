@@ -578,12 +578,12 @@ imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
 imports.wbg.__wbindgen_throw = function(arg0, arg1) {
     throw new Error(getStringFromWasm0(arg0, arg1));
 };
-imports.wbg.__wbindgen_closure_wrapper3388 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 444, __wbg_adapter_20);
+imports.wbg.__wbindgen_closure_wrapper3452 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 456, __wbg_adapter_20);
     return addHeapObject(ret);
 };
-imports.wbg.__wbindgen_closure_wrapper8139 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 478, __wbg_adapter_23);
+imports.wbg.__wbindgen_closure_wrapper8203 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 490, __wbg_adapter_23);
     return addHeapObject(ret);
 };
 
@@ -624,7 +624,7 @@ async function __wbg_init(input) {
     if (wasm !== undefined) return wasm;
 
     if (typeof input === 'undefined') {
-        input = new URL('rust-in-space-937ef43b83bbe7e0_bg.wasm', import.meta.url);
+        input = new URL('rust-in-space-694b96b49fd16f26_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
